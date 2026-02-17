@@ -7,7 +7,7 @@ from typing import Any, Dict, List, Optional, Tuple
 import torch
 import torch.nn as nn
 import torch.nn.functional as F
-from datasets import load_dataset, DatasetDict, VerificationMode
+from datasets import load_dataset, DatasetDict, VerificationMode, load_from_disk
 
 from transformers import (
     HfArgumentParser,
@@ -491,13 +491,18 @@ def main() -> None:
     else:
         if data_args.dataset_name is None:
             raise ValueError("Provide --dataset_name (HF datasets) or use --train_jsonl/--validation_jsonl for local files.")
-        raw = load_dataset(
-            data_args.dataset_name,
-            data_args.dataset_config_name,
-            verification_mode=verification_mode,
-            cache_dir=model_args.cache_dir,
-        )
-    train_ds = raw[data_args.train_split_name]
+        # raw = load_dataset(
+        #     data_args.dataset_name,
+        #     data_args.dataset_config_name,
+        #     data_files="./vibevoice_dataset/alvanlii_cantonese_youtube"
+        #     verification_mode=verification_mode,
+        #     cache_dir=model_args.cache_dir,
+        #     token="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",
+        #     num_proc=8,
+        #     split='train[:100]'
+        # )
+        raw = load_from_disk(data_args.dataset_name)
+    train_ds = raw
     eval_ds = None
     if training_args.do_eval:
         if data_args.eval_split_name and data_args.eval_split_name in raw:

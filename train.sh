@@ -1,8 +1,8 @@
-cd VibeVoice && \
+cd community && \
 uv run vibevoice/finetune/train_vibevoice.py \
     --model_name_or_path ../vibevoice_1.5b \
-    --dataset_name alvanlii/cantonese-youtube \
-    --text_column_name transcript_whisper \
+    --dataset_name /root/VibeVoice/vibevoice_dataset/alvanlii_cantonese_youtube \
+    --text_column_name text \
     --audio_column_name audio \
     --voice_prompts_column_name audio \
     --output_dir ../vibevoice_1.5b_cantonese_train \
@@ -13,7 +13,7 @@ uv run vibevoice/finetune/train_vibevoice.py \
     --logging_steps 10 \
     --save_steps 100 \
     --eval_steps 100 \
-    --report_to wandb \
+    --report_to none \
     --remove_unused_columns False \
     --bf16 True \
     --do_train \

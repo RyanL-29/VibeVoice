@@ -10,3 +10,5 @@ wheels/
 .venv
 
 *.safetensors
+vibevoice_dataset
+vibevoice_1.5b_cantonese_train
