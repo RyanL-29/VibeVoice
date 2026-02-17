@@ -1,0 +1,30 @@
+cd VibeVoice && \
+uv run vibevoice/finetune/train_vibevoice.py \
+    --model_name_or_path ../vibevoice_1.5b \
+    --dataset_name alvanlii/cantonese-youtube \
+    --text_column_name transcript_whisper \
+    --audio_column_name audio \
+    --voice_prompts_column_name audio \
+    --output_dir ../vibevoice_1.5b_cantonese_train \
+    --per_device_train_batch_size 1 \
+    --gradient_accumulation_steps 8 \
+    --learning_rate 2.5e-5 \
+    --num_train_epochs 1 \
+    --logging_steps 10 \
+    --save_steps 100 \
+    --eval_steps 100 \
+    --report_to wandb \
+    --remove_unused_columns False \
+    --bf16 True \
+    --do_train \
+    --gradient_clipping \
+    --gradient_checkpointing False \
+    --ddpm_batch_mul 4 \
+    --diffusion_loss_weight 1.4 \
+    --train_diffusion_head True \
+    --ce_loss_weight 0.04 \
+    --voice_prompt_drop_rate 0.2 \
+    --lora_target_modules q_proj,k_proj,v_proj,o_proj,gate_proj,up_proj,down_proj \
+    --lr_scheduler_type cosine \
+    --warmup_ratio 0.03 \
+    --max_grad_norm 0.8
