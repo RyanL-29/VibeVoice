@@ -8,9 +8,11 @@ from vibevoice.processor.vibevoice_processor import VibeVoiceProcessor
 from vibevoice.modular.modeling_vibevoice_inference import VibeVoiceForConditionalGenerationInference
 
 def main():
-    processor = VibeVoiceProcessor.from_pretrained("vibevoice_1.5b")
+    processor = VibeVoiceProcessor.from_pretrained("vibevoice_1.5b_cantonese_train/merge")
+    #processor = VibeVoiceProcessor.from_pretrained("vibevoice_1.5b")
     model = VibeVoiceForConditionalGenerationInference.from_pretrained(
-        "vibevoice_1.5b",
+        "vibevoice_1.5b_cantonese_train/merge",
+        #"vibevoice_1.5b",
         torch_dtype=torch.bfloat16,
         device_map="cuda",
         attn_implementation="sdpa",
@@ -22,10 +24,10 @@ def main():
     if hasattr(model.model, 'language_model'):
         print(f"Language model attention: {model.model.language_model.config._attn_implementation}")
         
-    voice_samples = ["vibevoice_realtime/voices/yue_male.wav"]
+    voice_samples = ["vibevoice_realtime/voices/test.wav"]
     print(f"Start generate")
     inputs = processor(
-        text=["Speaker 1: 今日嚟到呢間餐廳呢係香港人好熟悉嘅一間扒房"],
+        text=["Speaker 1: 而家係二零二六年二月十八號，下午一點零三分，氣溫係攝氏二十五度。"],
         # cached_prompt=all_prefilled_outputs,
         # voice_samples=[voice_samples],
         padding=True,
@@ -39,7 +41,7 @@ def main():
     outputs = model.generate(
         **inputs,
         max_new_tokens=None,
-        cfg_scale=1.3,
+        cfg_scale=2.0,
         tokenizer=processor.tokenizer,
         generation_config={'do_sample': False},
         verbose=True,

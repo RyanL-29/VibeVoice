@@ -2,7 +2,7 @@ from datasets import load_dataset, Features, Value, Audio, Sequence, Dataset, lo
 import os
 
 CHUNK_SIZE = 1000
-TOTAL_RECORDS = 5000
+TOTAL_RECORDS = 50000
 SAVE_PATH = "./vibevoice_dataset/alvanlii_cantonese_youtube/checkpoint"
 
 print("Loading raw dataset...")

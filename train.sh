@@ -7,18 +7,18 @@ uv run vibevoice/finetune/train_vibevoice.py \
     --voice_prompts_column_name audio \
     --output_dir ../vibevoice_1.5b_cantonese_train \
     --per_device_train_batch_size 1 \
-    --gradient_accumulation_steps 8 \
+    --gradient_accumulation_steps 16 \
     --learning_rate 2.5e-5 \
-    --num_train_epochs 1 \
+    --num_train_epochs 3 \
     --logging_steps 10 \
-    --save_steps 100 \
-    --eval_steps 100 \
-    --report_to none \
+    --save_steps 500 \
+    --eval_steps 500 \
+    --report_to mlflow \
     --remove_unused_columns False \
     --bf16 True \
     --do_train \
     --gradient_clipping \
-    --gradient_checkpointing False \
+    --gradient_checkpointing True \
     --ddpm_batch_mul 4 \
     --diffusion_loss_weight 1.4 \
     --train_diffusion_head True \

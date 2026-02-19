@@ -33,7 +33,8 @@ dependencies = [
     "absl-py",
     "gradio==5.50.0",
     "av",
-    "aiortc"
+    "aiortc",
+    "mlflow>=3.9.0",
 ]
 
 [project.optional-dependencies]
