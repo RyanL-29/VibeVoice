@@ -9,12 +9,12 @@ from vibevoice.modular.modeling_vibevoice_inference import VibeVoiceForCondition
 
 def main():
     processor = VibeVoiceProcessor.from_pretrained("vibevoice_1.5b_cantonese_train/merge")
-    #processor = VibeVoiceProcessor.from_pretrained("vibevoice_1.5b")
+    # processor = VibeVoiceProcessor.from_pretrained("vibevoice_1.5b")
     model = VibeVoiceForConditionalGenerationInference.from_pretrained(
         "vibevoice_1.5b_cantonese_train/merge",
-        #"vibevoice_1.5b",
-        torch_dtype=torch.bfloat16,
-        device_map="cuda",
+        # "vibevoice_1.5b",
+        torch_dtype=torch.float32,
+        device_map="cpu",
         attn_implementation="sdpa",
     )
 
@@ -24,10 +24,10 @@ def main():
     if hasattr(model.model, 'language_model'):
         print(f"Language model attention: {model.model.language_model.config._attn_implementation}")
         
-    voice_samples = ["vibevoice_realtime/voices/test.wav"]
+    voice_samples = ["vibevoice_realtime/voices/sample.wav"]
     print(f"Start generate")
     inputs = processor(
-        text=["Speaker 1: 而家係二零二六年二月十八號，下午一點零三分，氣溫係攝氏二十五度。"],
+        text=["Speaker 1: 警告：機房溫度過高，目前讀數係攝氏 42 度。"],
         # cached_prompt=all_prefilled_outputs,
         # voice_samples=[voice_samples],
         padding=True,
@@ -37,11 +37,11 @@ def main():
 
     for k, v in inputs.items():
         if torch.is_tensor(v):
-            inputs[k] = v.to("cuda")
+            inputs[k] = v.to("cpu")
     outputs = model.generate(
         **inputs,
         max_new_tokens=None,
-        cfg_scale=2.0,
+        cfg_scale=3.0,
         tokenizer=processor.tokenizer,
         generation_config={'do_sample': False},
         verbose=True,

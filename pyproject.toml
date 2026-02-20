@@ -29,6 +29,7 @@ dependencies = [
     "bitsandbytes>=0.49.2",
     "setuptools>=82.0.0",
     "wandb>=0.25.0",
+    "fiftyone>=1.13.1",
 ]
 
 [project.optional-dependencies]

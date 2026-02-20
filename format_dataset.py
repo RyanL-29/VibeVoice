@@ -15,9 +15,9 @@ features = Features({
     "transcript_sensevoice": Value("string"),
     "emotion_sensevoice": Sequence(Value("string")),
     "event_sensevoice": Sequence(Value("string")),
-    "c50": Value("string"),                # Force to string to prevent float error
-    "snr": Value("string"),                # Force to string
-    "speech_duration": Value("string"),    # Force to string
+    "c50": Value("float32"),                # Force to string to prevent float error
+    "snr": Value("float32"),                # Force to string
+    "speech_duration": Value("float32"),    # Force to string
     "emotion_emotion2vec": Value("string")
 })
 
@@ -30,11 +30,14 @@ streamed_ds = load_dataset("alvanlii/cantonese-youtube", split="train", streamin
 
 def format_for_vibe(example):
     return {
-        "text": f"Speaker 1: {example['transcript_whisper']}",
+        "text": f"Speaker 1: {example['transcript_sensevoice']}",
         "audio": example["audio"]
     }
     
-formatted_stream = streamed_ds.map(format_for_vibe)
+
+formatted_stream = streamed_ds.filter(lambda x: x['c50'] >= 48 and 'music' not in x['event_sensevoice'])
+formatted_stream = formatted_stream.map(format_for_vibe)
+
 
 start_idx = get_already_processed_count()
 current_stream = formatted_stream.skip(start_idx)
