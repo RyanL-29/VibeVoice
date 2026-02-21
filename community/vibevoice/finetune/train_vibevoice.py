@@ -510,7 +510,7 @@ def main() -> None:
         elif data_args.eval_split_size and data_args.eval_split_size > 0 and len(train_ds) > 1:
             split = train_ds.train_test_split(test_size=data_args.eval_split_size, seed=training_args.seed)
             train_ds, eval_ds = split["train"], split["test"]
-
+    
     train_dataset = VibeVoiceDataset(
         train_ds,
         text_column=data_args.text_column_name,

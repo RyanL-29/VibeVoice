@@ -11,18 +11,18 @@ uv run vibevoice/finetune/train_vibevoice.py \
     --learning_rate 2.5e-5 \
     --num_train_epochs 3 \
     --logging_steps 10 \
-    --save_steps 500 \
-    --eval_steps 500 \
+    --save_steps 200 \
+    --eval_steps 200 \
     --report_to mlflow \
     --remove_unused_columns False \
     --bf16 True \
     --do_train \
     --gradient_clipping \
-    --gradient_checkpointing True \
+    --gradient_checkpointing False \
     --ddpm_batch_mul 4 \
     --diffusion_loss_weight 1.4 \
     --train_diffusion_head True \
-    --ce_loss_weight 0.04 \
+    --ce_loss_weight 0.1 \
     --voice_prompt_drop_rate 0.2 \
     --lora_target_modules q_proj,k_proj,v_proj,o_proj,gate_proj,up_proj,down_proj \
     --lr_scheduler_type cosine \

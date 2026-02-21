@@ -26,7 +26,7 @@ def main():
     voice_samples = ["vibevoice_realtime/voices/sample.wav"]
     print(f"Start generate")
     inputs = processor(
-        text=["Speaker 1: 警告：機房溫度過高，目前讀數攝氏四十二度。"],
+        text=["Speaker 1: 警告 機房溫度過高 目前讀數攝氏四十二度"],
         padding=True,
         return_tensors="pt",
         return_attention_mask=True,
