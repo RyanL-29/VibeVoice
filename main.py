@@ -9,7 +9,6 @@ from vibevoice.modular.modeling_vibevoice_inference import VibeVoiceForCondition
 
 def main():
     processor = VibeVoiceProcessor.from_pretrained("vibevoice_1.5b_cantonese_train/merge")
-    # processor = VibeVoiceProcessor.from_pretrained("vibevoice_1.5b")
     model = VibeVoiceForConditionalGenerationInference.from_pretrained(
         "vibevoice_1.5b_cantonese_train/merge",
         # "vibevoice_1.5b",
@@ -27,9 +26,7 @@ def main():
     voice_samples = ["vibevoice_realtime/voices/sample.wav"]
     print(f"Start generate")
     inputs = processor(
-        text=["Speaker 1: 警告：機房溫度過高，目前讀數係攝氏 42 度。"],
-        # cached_prompt=all_prefilled_outputs,
-        # voice_samples=[voice_samples],
+        text=["Speaker 1: 警告：機房溫度過高，目前讀數攝氏四十二度。"],
         padding=True,
         return_tensors="pt",
         return_attention_mask=True,
@@ -41,12 +38,11 @@ def main():
     outputs = model.generate(
         **inputs,
         max_new_tokens=None,
-        cfg_scale=3.0,
+        cfg_scale=1.5,
         tokenizer=processor.tokenizer,
         generation_config={'do_sample': False},
         verbose=True,
         is_prefill=True
-        # all_prefilled_outputs=copy.deepcopy(all_prefilled_outputs) if all_prefilled_outputs is not None else None,
     )
     processor.save_audio(
         outputs.speech_outputs[0], # First (and only) batch item
