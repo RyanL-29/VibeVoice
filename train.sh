@@ -1,7 +1,7 @@
 cd community && \
 uv run vibevoice/finetune/train_vibevoice.py \
     --model_name_or_path ../vibevoice_1.5b \
-    --dataset_name /root/VibeVoice/vibevoice_dataset/alvanlii_cantonese_radio \
+    --dataset_name /home/administrator/VibeVoice/vibevoice_dataset/zh_wiki_yue_long \
     --text_column_name text \
     --audio_column_name audio \
     --voice_prompts_column_name audio \

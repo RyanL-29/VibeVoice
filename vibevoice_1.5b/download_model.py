@@ -5,8 +5,8 @@ from safetensors.torch import load_file, save_file
 import torch
 
 REPO_ID = "microsoft/VibeVoice-1.5B"
-LOCAL_DIR = "./vibevoice_1.5b"
-OUTPUT_FILE = "./vibevoice_1.5b/vibevoice_1.5b_merged.safetensors"
+LOCAL_DIR = "./"
+OUTPUT_FILE = "./vibevoice_1.5b_merged.safetensors"
 
 def download_and_merge():
     print(f"Downloading shards from {REPO_ID}...")
