@@ -27,7 +27,8 @@ def get_already_processed_count():
     chunks = [d for d in os.listdir(SAVE_PATH) if d.startswith("chunk_")]
     return len(chunks) * CHUNK_SIZE
 
-streamed_ds = load_dataset("alvanlii/cantonese-radio", split="train", features=features, streaming=True, token="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")
+# Auth via the HF_TOKEN environment variable (or `huggingface-cli login`); never hard-code tokens.
+streamed_ds = load_dataset("alvanlii/cantonese-radio", split="train", features=features, streaming=True, token=os.environ.get("HF_TOKEN"))
 
 def format_for_vibe(example):
     return {

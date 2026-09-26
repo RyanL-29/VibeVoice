@@ -8,8 +8,13 @@ wheels/
 
 # Virtual environments
 .venv
-
+.cache
 *.safetensors
 vibevoice_dataset
 vibevoice_1.5b_cantonese_train
 *.db
+vibevoice_1.5b/config.json
+vibevoice_1.5b/model.safetensors.index.json
+vibevoice_1.5b/preprocessor_config.json
+
+*.wav

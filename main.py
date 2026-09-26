@@ -13,7 +13,7 @@ def main():
         "vibevoice_1.5b_cantonese_train/merge",
         # "vibevoice_1.5b",
         torch_dtype=torch.float32,
-        device_map="cpu",
+        device_map="cuda",
         attn_implementation="sdpa",
     )
 
@@ -26,7 +26,7 @@ def main():
     voice_samples = ["vibevoice_realtime/voices/sample.wav"]
     print(f"Start generate")
     inputs = processor(
-        text=["Speaker 1: 警告 機房溫度過高 目前讀數攝氏四十二度"],
+        text=["Speaker 1: 警告!機房溫度過高!目前讀數攝氏四十二度"],
         padding=True,
         return_tensors="pt",
         return_attention_mask=True,
@@ -34,7 +34,7 @@ def main():
 
     for k, v in inputs.items():
         if torch.is_tensor(v):
-            inputs[k] = v.to("cpu")
+            inputs[k] = v.to("cuda")
     outputs = model.generate(
         **inputs,
         max_new_tokens=None,

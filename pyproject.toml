@@ -38,3 +38,15 @@ streamingtts = [
   "transformers==4.51.3", 
 ]
 
+# Use the CUDA 13.0 PyTorch build on Linux (required for NVIDIA GB10 / DGX Spark, aarch64, sm_121).
+# Without this, a CPU-only torch wheel can end up installed and training silently runs on CPU.
+[tool.uv.sources]
+torch = [
+  { index = "pytorch-cu130", marker = "sys_platform == 'linux'" },
+]
+
+[[tool.uv.index]]
+name = "pytorch-cu130"
+url = "https://download.pytorch.org/whl/cu130"
+explicit = true
+

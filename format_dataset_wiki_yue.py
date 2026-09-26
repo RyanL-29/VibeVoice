@@ -8,15 +8,15 @@ import edge_tts
 from tqdm import tqdm
 
 CHUNK_SIZE = 1000
-CHUNKS_PER_RUN = 1                 # chunks generated per run (1 = 1000 rows); rerun to continue. None = all
+CHUNKS_PER_RUN = 10                 # chunks generated per run (1 = 1000 rows); rerun to continue. None = all
 TOTAL_RECORDS = 51148              # full dataset size; lower it to generate a subset
 VOICE = "zh-HK-HiuGaaiNeural"
 RATE = "+0%"                       # edge-tts speaking rate, e.g. "-10%" / "+10%"
 SAMPLING_RATE = 24000              # edge-tts outputs 24kHz mono MP3, same rate VibeVoice trains on
 MAX_CONCURRENCY = 8                # parallel edge-tts requests
 MAX_RETRIES = 5
-SAVE_PATH = "./vibevoice_dataset/zh_wiki_yue_long/checkpoint"
-FINAL_PATH = "./vibevoice_dataset/zh_wiki_yue_long"
+SAVE_PATH = "./vibevoice_dataset/zoengjyutgaai/lukdinggei/checkpoint"
+FINAL_PATH = "./vibevoice_dataset/zoengjyutgaai/lukdinggei"
 
 features = Features({
     "text": Value("string"),
@@ -78,8 +78,10 @@ def format_for_vibe(text, array):
 
 
 print("Loading raw dataset...")
-raw_ds = load_dataset("R5dwMg/zh-wiki-yue-long", split="train")
-raw_ds = raw_ds.filter(lambda x: x["text"] is not None and x["text"].strip() != "")
+raw_ds = load_dataset("CanCLID/zoengjyutgaai", split="lukdinggei")
+texts = raw_ds["transcription"]
+raw_ds = raw_ds.select([i for i, t in enumerate(texts) if t and t.strip()])
+raw_ds = raw_ds.rename_column("transcription", "text")
 total = min(TOTAL_RECORDS, len(raw_ds))
 print(f"{len(raw_ds)} usable rows, generating {total} with voice {VOICE}")
 

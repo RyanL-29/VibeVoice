@@ -4,7 +4,7 @@ import soundfile as sf
 
 CHUNK_SIZE = 1000
 TOTAL_RECORDS = 50000
-SAVE_PATH = "./vibevoice_dataset/zh_wiki_yue_long/checkpoint"
+SAVE_PATH = "./vibevoice_dataset/zoengjyutgaai/lukdinggei/checkpoint"
 
 print("Loading raw dataset...")
 features = Features({
@@ -22,12 +22,7 @@ features = Features({
     "emotion_emotion2vec": Value("string")
 })
 
-def get_already_processed_count():
-    # Check how many chunks we've already saved
-    chunks = [d for d in os.listdir(SAVE_PATH) if d.startswith("chunk_")]
-    return len(chunks) * CHUNK_SIZE
-
-ds = load_from_disk("./vibevoice_dataset/zh_wiki_yue_long")
+ds = load_from_disk("./vibevoice_dataset/zoengjyutgaai/lukdinggei")
 
 sample = next(iter(ds))
 

@@ -1,18 +1,25 @@
 cd community && \
 uv run vibevoice/finetune/train_vibevoice.py \
     --model_name_or_path ../vibevoice_1.5b \
-    --dataset_name /home/administrator/VibeVoice/vibevoice_dataset/zh_wiki_yue_long \
+    --dataset_name /home/administrator/VibeVoice/vibevoice_dataset/zoengjyutgaai/lukdinggei \
     --text_column_name text \
     --audio_column_name audio \
-    --voice_prompts_column_name audio \
+    --voice_prompt_source other \
+    --target_feature_cache_dir ../vibevoice_dataset/feature_cache \
     --output_dir ../vibevoice_1.5b_cantonese_train \
-    --per_device_train_batch_size 1 \
-    --gradient_accumulation_steps 16 \
+    --per_device_train_batch_size 4 \
+    --gradient_accumulation_steps 4 \
+    --dataloader_num_workers 8 \
+    --dataloader_persistent_workers True \
+    --dataloader_pin_memory True \
+    --dataloader_prefetch_factor 4 \
+    --optim adamw_torch_fused \
+    --attn_implementation sdpa \
     --learning_rate 2.5e-5 \
     --num_train_epochs 3 \
     --logging_steps 10 \
-    --save_steps 200 \
-    --eval_steps 200 \
+    --save_steps 250 \
+    --save_total_limit 3 \
     --report_to mlflow \
     --remove_unused_columns False \
     --bf16 True \
